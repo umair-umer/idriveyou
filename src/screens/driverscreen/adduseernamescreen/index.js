@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground } from 'react-native'
 const { width, height } = Dimensions.get("window")
 import CustomCheckbox from '../../../components/checkbox'
-import Inputcustoms from '../../../components/custominput'
 import Custombutton from '../../../components/cutomButton'
 import { calculateFontSize } from '../../../utils/font'
 import Images from '../../../utils/im'

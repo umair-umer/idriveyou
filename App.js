@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
 import {AppNavigator} from './src/navigations/Appnavigator';
 import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
+import {StripeProvider} from '@stripe/stripe-react-native';
+
 const App = () => {
   useEffect(() => {
     SplashScreen.hide();
@@ -10,7 +11,12 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <AppNavigator />
+      <StripeProvider
+        publishableKey={
+          'pk_test_51LNt6zKhmRit377zkPatzgi9ckH1GU0kWpMkAUNU3BX3VucekD9bkV6QFodRelAmt7vDAgoIdpYUeGtuGWfQlcWr00bTsqA7Dl'
+        }>
+        <AppNavigator />
+      </StripeProvider>
     </NavigationContainer>
   );
 };

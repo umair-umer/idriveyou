@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, PermissionsAndroid, Platform, Image } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  PermissionsAndroid,
+  Platform,
+  Image,
+} from 'react-native';
+import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import polyline from '@mapbox/polyline';  // Import polyline library
+import polyline from '@mapbox/polyline'; // Import polyline library
 import Images from '../../utils/im';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyBV_p4Zd0frLEef7ZDqd_26qC7kqQ5u2u4'; // Replace with your API Key
 
-const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
+const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
   const [location, setLocation] = useState(null);
   const [locationName, setLocationName] = useState(''); // Store the name of the current location
   const [directions, setDirections] = useState([]);
@@ -17,7 +24,7 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
   const [nearbyPlaces, setNearbyPlaces] = useState([]); // To store nearby places
   const [isFollowingUser, setIsFollowingUser] = useState(true); // Track whether the map is following the user
   const [pickupLocationName, setPickupLocationName] = useState(''); // Store the name of the pickup location
-  const [dropLocationName, setDropLocationName] = useState(''); 
+  const [dropLocationName, setDropLocationName] = useState('');
   useEffect(() => {
     const getLocation = async () => {
       const hasPermission = await requestLocationPermission();
@@ -27,16 +34,16 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
       }
 
       Geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation({ latitude, longitude });
+        position => {
+          const {latitude, longitude} = position.coords;
+          setLocation({latitude, longitude});
           fetchLocationName(latitude, longitude); // Fetch the name of the current location
           fetchNearbyPlaces(latitude, longitude); // Fetch nearby places after getting location
         },
-        (error) => {
+        error => {
           console.error(error);
         },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     };
 
@@ -55,29 +62,36 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
     }
   }, [pickupLocation]);
 
-  const fetchDirections = async (origin, destination, setDirectionsFunction) => {
+  const fetchDirections = async (
+    origin,
+    destination,
+    setDirectionsFunction,
+  ) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_MAPS_APIKEY}`
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_MAPS_APIKEY}`,
       );
       const data = await response.json();
-  
+
       if (data.status !== 'OK') {
-        console.error('Error fetching directions:', data.error_message || data.status);
+        console.error(
+          'Error fetching directions:',
+          data.error_message || data.status,
+        );
         return;
       }
-  
+
       if (!data.routes || data.routes.length === 0) {
         console.error('No routes found');
         return;
       }
-  
+
       const points = polyline.decode(data.routes[0].overview_polyline.points); // Decode polyline points
       const coordinates = points.map(point => ({
         latitude: point[0],
         longitude: point[1],
       }));
-  
+
       setDirectionsFunction(coordinates);
       setSteps(data.routes[0].legs[0].steps); // Save steps for displaying directions
       onRouteCalculated(coordinates); // Inform parent component
@@ -89,12 +103,15 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
   const fetchNearbyPlaces = async (latitude, longitude) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=point_of_interest&key=${GOOGLE_MAPS_APIKEY}`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=point_of_interest&key=${GOOGLE_MAPS_APIKEY}`,
       );
       const data = await response.json();
-      
+
       if (data.status !== 'OK') {
-        console.error('Error fetching nearby places:', data.error_message || data.status);
+        console.error(
+          'Error fetching nearby places:',
+          data.error_message || data.status,
+        );
         return;
       }
 
@@ -107,7 +124,7 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
   const fetchLocationName = async (latitude, longitude, setLocationName) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_APIKEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_APIKEY}`,
       );
       const data = await response.json();
 
@@ -128,9 +145,9 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: "Location Access Required",
-            message: "This app needs to access your location",
-          }
+            title: 'Location Access Required',
+            message: 'This app needs to access your location',
+          },
         );
         return granted === PermissionsAndroid.RESULTS.GRANTED;
       } catch (err) {
@@ -158,21 +175,28 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
-          onRegionChangeComplete={handleRegionChangeComplete}
-        >
+          onRegionChangeComplete={handleRegionChangeComplete}>
           {/* Custom Marker for Current Location */}
-          <Marker 
-            coordinate={location} 
-            title={locationName || "Your Location"}  // Display the location name or "Your Location"
-            image={require('../../assets/car.png')}  // Replace with your car icon path
+          <Marker
+            coordinate={location}
+            title={locationName || 'Your Location'} // Display the location name or "Your Location"
+            image={require('../../assets/car.png')} // Replace with your car icon path
           />
           <Marker coordinate={pickupLocation} title="Pickup Point" />
           <Marker coordinate={dropLocation} title="Drop Point" />
           {directions.length > 0 && (
-            <Polyline coordinates={directions} strokeWidth={5} strokeColor="blue" />
+            <Polyline
+              coordinates={directions}
+              strokeWidth={5}
+              strokeColor="blue"
+            />
           )}
           {secondLegDirections.length > 0 && (
-            <Polyline coordinates={secondLegDirections} strokeWidth={5} strokeColor="green" />
+            <Polyline
+              coordinates={secondLegDirections}
+              strokeWidth={5}
+              strokeColor="green"
+            />
           )}
 
           {/* Render markers for nearby places */}
@@ -196,10 +220,15 @@ const MapHome = ({ pickupLocation, dropLocation, onRouteCalculated }) => {
         <Text style={styles.heading}>Next Step:</Text>
         {steps.length > 0 && currentStepIndex < steps.length ? (
           <Text style={styles.instructionText}>
-            {steps[currentStepIndex].html_instructions.replace(/<[^>]*>?/gm, '')}
+            {steps[currentStepIndex].html_instructions.replace(
+              /<[^>]*>?/gm,
+              '',
+            )}
           </Text>
         ) : (
-          <Text style={styles.instructionText}>You have arrived at your destination.</Text>
+          <Text style={styles.instructionText}>
+            You have arrived at your destination.
+          </Text>
         )}
       </View>
     </View>

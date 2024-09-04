@@ -54,7 +54,7 @@ const NameScreen = ({navigation}) => {
       <Button
         title={'Next'}
         style={{width: '90%', alignSelf: 'center', marginVertical: 10}}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('OTPScreen')}
       />
     </SafeAreaView>
   );

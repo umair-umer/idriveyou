@@ -14,10 +14,10 @@ const Button = ({onPress, title, style, textStyle, disabled, isOutlined}) => {
       justifyContent: 'center',
       width: '100%',
       borderWidth: isOutlined ? 1 : null,
-      borderColor: isOutlined ? WHITE : null,
+      borderColor: isOutlined ? THEME_COLOR : null,
     },
     buttonText: {
-      color: WHITE,
+      color: isOutlined ? THEME_COLOR : WHITE,
       fontSize: 16,
       fontFamily: PoppinsBold,
     },

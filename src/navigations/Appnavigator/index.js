@@ -9,5 +9,5 @@ const Stack = createNativeStackNavigator();
 export const AppNavigator = () => {
   const role = 'user';
 
-  return role === 'user' ? <UserNavigator /> : <DriverNavigator />;
+  return role == 'user' ? <UserNavigator /> : <DriverNavigator />;
 };

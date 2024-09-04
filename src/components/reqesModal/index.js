@@ -1,18 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import Modal from 'react-native-modal';
-import { calculateFontSize } from '../../utils/font';
-const { width, height } = Dimensions.get("window");
+import {calculateFontSize} from '../../utils/font';
+const {width, height} = Dimensions.get('window');
 
-const AceeptModal = ({ isModalVisible, pickupLocation, dropLocation, onAccept, onCancel }) => {
+const AceeptModal = ({
+  isModalVisible,
+  pickupLocation,
+  dropLocation,
+  onAccept,
+  onCancel,
+}) => {
   return (
     <View style={styles.container}>
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={onCancel}
         style={styles.modal}
-        swipeDirection="down"
-      >
+        swipeDirection="down">
         <View style={styles.modalContent}>
           <View style={styles.timeofreqest}>
             <Text style={styles.text2}>2</Text>
@@ -23,7 +34,9 @@ const AceeptModal = ({ isModalVisible, pickupLocation, dropLocation, onAccept, o
               <Text style={styles.drp}>Pickup</Text>
             </View>
             <View style={styles.locationDetail}>
-              <Text style={styles.drp}>{pickupLocation ? pickupLocation.name : 'Location'}</Text>
+              <Text style={styles.drp}>
+                {pickupLocation ? pickupLocation.name : 'Location'}
+              </Text>
             </View>
           </View>
           <View style={styles.locationRow}>
@@ -31,7 +44,9 @@ const AceeptModal = ({ isModalVisible, pickupLocation, dropLocation, onAccept, o
               <Text style={styles.drp}>Drop</Text>
             </View>
             <View style={styles.locationDetail}>
-              <Text style={styles.drp}>{dropLocation ? dropLocation.name : 'Location'}</Text>
+              <Text style={styles.drp}>
+                {dropLocation ? dropLocation.name : 'Location'}
+              </Text>
             </View>
           </View>
           <View style={styles.buttonsRow}>
@@ -57,7 +72,7 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'flex-end',
     position: 'absolute',
-    top: height * 0.20,
+    top: height * 0.2,
     alignItems: 'center',
   },
   modalContent: {

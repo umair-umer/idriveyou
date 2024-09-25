@@ -6,16 +6,20 @@ import Custombutton from '../../../components/cutomButton';
 const { width, height } = Dimensions.get("window");
 const GOOGLE_PLACES_API_KEY = 'AIzaSyBV_p4Zd0frLEef7ZDqd_26qC7kqQ5u2u4';
 
-function Selectcityscreen({navigation}) {
+function SElectstate({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.box}>
-                <Text style={styles.txt}>Select City</Text>
+                <Text style={styles.txt}>Select State</Text>
             </View>
 
+
+
+            {/* State Input */}
             <View style={styles.inpCon}>
+                {/* <Text style={styles.label}>Select State</Text> */}
                 <GooglePlacesAutocomplete
-                    placeholder="Enter Your City Name"
+                    placeholder="Enter Your State Name"
                     textInputProps={{
                         placeholderTextColor: '#000',
                     }}
@@ -23,12 +27,13 @@ function Selectcityscreen({navigation}) {
                     returnKeyType={'search'}
                     fetchDetails={true}
                     onPress={(data, details = null) => {
-                        console.log('Selected Place:', data, details);
+                        console.log('Selected State:', data, details);
                     }}
                     query={{
                         key: GOOGLE_PLACES_API_KEY,
                         language: 'en',
-                        types: '(cities)',
+                        types: '(regions)',
+                        componentRestrictions: { country: 'us' } 
                     }}
                     styles={{
                         textInputContainer: {
@@ -57,12 +62,11 @@ function Selectcityscreen({navigation}) {
                     renderDescription={(row) => row.description || row.vicinity}
                     debounce={200}
                 />
-
-             
             </View>
 
-            <View style={{ alignItems: "center" }}> 
-                <Custombutton text={"Next"} onPress={() => navigation.navigate("budget")} />
+
+            <View style={{ alignItems: "center" }}>
+                <Custombutton text={"Next"} onPress={() => navigation.navigate("cityselect")} />
             </View>
         </View>
     )
@@ -121,4 +125,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Selectcityscreen;
+export default SElectstate;

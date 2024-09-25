@@ -9,22 +9,22 @@ import {
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import polyline from '@mapbox/polyline'; // Import polyline library
-import Images from '../../utils/im';
+import polyline from '@mapbox/polyline';  // Import polyline library
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyBV_p4Zd0frLEef7ZDqd_26qC7kqQ5u2u4'; // Replace with your API Key
 
 const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
   const [location, setLocation] = useState(null);
-  const [locationName, setLocationName] = useState(''); // Store the name of the current location
+  const [currentLocationName, setCurrentLocationName] = useState(''); // Store the name of the current location
+  const [pickupLocationName, setPickupLocationName] = useState(''); // Store the name of the pickup location
+  const [dropLocationName, setDropLocationName] = useState(''); // Store the name of the drop location
   const [directions, setDirections] = useState([]);
   const [secondLegDirections, setSecondLegDirections] = useState([]);
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [nearbyPlaces, setNearbyPlaces] = useState([]); // To store nearby places
   const [isFollowingUser, setIsFollowingUser] = useState(true); // Track whether the map is following the user
-  const [pickupLocationName, setPickupLocationName] = useState(''); // Store the name of the pickup location
-  const [dropLocationName, setDropLocationName] = useState('');
+
   useEffect(() => {
     const getLocation = async () => {
       const hasPermission = await requestLocationPermission();
@@ -34,10 +34,10 @@ const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
       }
 
       Geolocation.getCurrentPosition(
-        position => {
-          const {latitude, longitude} = position.coords;
-          setLocation({latitude, longitude});
-          fetchLocationName(latitude, longitude); // Fetch the name of the current location
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+          fetchLocationName(latitude, longitude, setCurrentLocationName); // Fetch the current location name
           fetchNearbyPlaces(latitude, longitude); // Fetch nearby places after getting location
         },
         error => {
@@ -48,6 +48,9 @@ const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
     };
 
     getLocation();
+    // Fetch the names of the pickup and drop locations
+    fetchLocationName(pickupLocation.latitude, pickupLocation.longitude, setPickupLocationName);
+    fetchLocationName(dropLocation.latitude, dropLocation.longitude, setDropLocationName);
   }, []);
 
   useEffect(() => {
@@ -163,6 +166,7 @@ const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
       setIsFollowingUser(false);
     }
   };
+
   return (
     <View style={styles.container}>
       {location ? (
@@ -179,11 +183,15 @@ const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
           {/* Custom Marker for Current Location */}
           <Marker
             coordinate={location}
-            title={locationName || 'Your Location'} // Display the location name or "Your Location"
-            image={require('../../assets/car.png')} // Replace with your car icon path
-          />
-          <Marker coordinate={pickupLocation} title="Pickup Point" />
-          <Marker coordinate={dropLocation} title="Drop Point" />
+            title={currentLocationName || "Your Location"}
+          >
+            <Image
+              source={require('../../assets/car.png')}
+              style={{ width: 30, height: 30 }}  // Adjust these values to resize
+            />
+          </Marker>
+          <Marker coordinate={pickupLocation} title={pickupLocationName || "Pickup Point"} />
+          <Marker coordinate={dropLocation} title={dropLocationName || "Drop Point"} />
           {directions.length > 0 && (
             <Polyline
               coordinates={directions}
@@ -216,7 +224,7 @@ const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
         <Text>Loading Map...</Text>
       )}
 
-      <View style={styles.instructionsContainer}>
+      {/* <View style={styles.instructionsContainer}>
         <Text style={styles.heading}>Next Step:</Text>
         {steps.length > 0 && currentStepIndex < steps.length ? (
           <Text style={styles.instructionText}>
@@ -230,7 +238,7 @@ const MapHome = ({pickupLocation, dropLocation, onRouteCalculated}) => {
             You have arrived at your destination.
           </Text>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };

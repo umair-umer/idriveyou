@@ -47,7 +47,7 @@ function Addusernamescreen({navigation}) {
                      
                     </View>
 
-                    <Custombutton text={'Next'} onPress={() => navigation.navigate('cityselect')} />
+                    <Custombutton text={'Next'} onPress={() => navigation.navigate('stateselect')} />
                 </View>
             </View>
         </ImageBackground>

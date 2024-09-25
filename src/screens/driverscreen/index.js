@@ -7,6 +7,7 @@ import InappNavigationscreen from "./inappnavigation"
 import {DriverLoginScreen} from "./login"
 import UserOtpscreen from "./otpscreen"
 import Selectcityscreen from "./selectcity"
+import SElectstate from "./selectstate"
 import Vehicleinformaion from "./vechalinformation"
 
-export default {DRiverHome,DriverLoginScreen,Selectcityscreen,Drivinglicensescreen,Vehicleinformaion,InappNavigationscreen,Getstarted,UserOtpscreen,BudgetScreen}
+export default {DRiverHome,DriverLoginScreen,Selectcityscreen,Drivinglicensescreen,Vehicleinformaion,InappNavigationscreen,Getstarted,UserOtpscreen,BudgetScreen,SElectstate}

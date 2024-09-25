@@ -24,31 +24,39 @@ import {
 
 import CusTomDrawer from '../customedrawer';
 import Settingscreen from '../../screens/driverscreen/settingscreen';
+import SElectstate from '../../screens/driverscreen/selectstate';
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 export const DriverNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="getstart" component={Getstarted} />
-
-      <Stack.Screen name="DRAWER" component={DriverDrawerNavigator} />
-      <Stack.Screen name="loginD" component={DriverLoginScreen} />
-      <Stack.Screen name="otp" component={UserOtpscreen} />
-      <Stack.Screen name="addusername" component={Addusernamescreen} />
-      <Stack.Screen name="cityselect" component={Selectcityscreen} />
-      <Stack.Screen name="budget" component={BudgetScreen} />
-      <Stack.Screen name="drivinglicense" component={Drivinglicensescreen} />
-      <Stack.Screen name="expscreen" component={Experiencscreen} />
-
-      <Stack.Screen name="setting" component={Settingscreen} />
-      {/* <Stack.Screen name="vechalinformation" component={Vehicleinformaion} />   */}
-      {/* <Stack.Screen name="appnavigationscreen" component={InappNavigationscreen} />   */}
-      {/* <Stack.Screen name="Creatingprofile" component={CreatingProfile} />   */}
-    </Stack.Navigator>
-  );
-};
+    
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        
+      
+        <Stack.Screen name="getstart" component={Getstarted} />
+     
+   <Stack.Screen name="DRAWER" component={DriverDrawerNavigator} /> 
+         <Stack.Screen name="loginD" component={DriverLoginScreen} />
+        <Stack.Screen name="otp" component={UserOtpscreen} />
+        <Stack.Screen name="addusername" component={Addusernamescreen} />
+        <Stack.Screen name="cityselect" component={Selectcityscreen} />  
+        <Stack.Screen name="stateselect" component={SElectstate} />  
+        <Stack.Screen name="budget" component={BudgetScreen} />  
+        <Stack.Screen name="drivinglicense" component={Drivinglicensescreen} />  
+        <Stack.Screen name="expscreen" component={Experiencscreen} />  
+        
+        <Stack.Screen name="setting" component={Settingscreen} />  
+        {/* <Stack.Screen name="vechalinformation" component={Vehicleinformaion} />   */}
+        {/* <Stack.Screen name="appnavigationscreen" component={InappNavigationscreen} />   */}
+        {/* <Stack.Screen name="Creatingprofile" component={CreatingProfile} />   */}
+        
+        
+      </Stack.Navigator>
+  
+  )
+}
 const DriverDrawerNavigator = () => {
   return (
     <Drawer.Navigator

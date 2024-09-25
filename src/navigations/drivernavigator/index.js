@@ -20,6 +20,7 @@ import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navi
 
 import CusTomDrawer from '../customedrawer';
 import Settingscreen from '../../screens/driverscreen/settingscreen';
+import SElectstate from '../../screens/driverscreen/selectstate';
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -38,6 +39,7 @@ export const DriverNavigator = () => {
         <Stack.Screen name="otp" component={UserOtpscreen} />
         <Stack.Screen name="addusername" component={Addusernamescreen} />
         <Stack.Screen name="cityselect" component={Selectcityscreen} />  
+        <Stack.Screen name="stateselect" component={SElectstate} />  
         <Stack.Screen name="budget" component={BudgetScreen} />  
         <Stack.Screen name="drivinglicense" component={Drivinglicensescreen} />  
         <Stack.Screen name="expscreen" component={Experiencscreen} />  

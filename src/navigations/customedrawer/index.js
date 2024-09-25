@@ -74,7 +74,11 @@ const CusTomDrawer = ({navigation}) => {
           <Text style={styles.editbutton}>fAQ</Text>
         </TouchableOpacity>
       </View>
-      <View style={{marginTop: height * 0.2}}>
+      
+      <View style={{marginTop: height * 0.09}}>
+      <View style={styles.logo}>
+        <Image style={{width:"100%",height:"100%",resizeMode:"center"}} source={Images.Logo}/>
+      </View>
         <TouchableOpacity style={styles.logbutton}>
           <AntDesign color={'#fff'} size={20} name="logout" />
           <Text style={styles.editbutton}>Sign out</Text>
@@ -143,4 +147,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
   },
+  logo:{
+    width: width * 0.4,
+    height:height*0.1,
+    marginVertical:10
+  }
 });

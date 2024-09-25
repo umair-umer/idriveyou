@@ -15,7 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import { calculateFontSize } from '../../utils/font';
+import {calculateFontSize} from '../../utils/font';
 import Images from '../../utils/im';
 const {width, height} = Dimensions.get('window');
 
@@ -23,9 +23,7 @@ const CusTomDrawer = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.procon}>
-        <TouchableOpacity style={styles.image}
-          onPress={() => navigation.navigate('userprofilescreen')}>
-      
+        <TouchableOpacity style={styles.image}>
           <Image
             resizeMode="cover"
             style={{width: '100%', height: '100%'}}
@@ -43,9 +41,7 @@ const CusTomDrawer = ({navigation}) => {
       <Text style={styles.sProfileText}>Alex Hudson</Text>
       <Text style={styles.emailtext}>Alex Hudson@gmail.com</Text>
       <View style={styles.viewiconsrout}>
-        <TouchableOpacity
-          style={styles.buttonroutes}
-          onPress={() => navigation.navigate('userprofilescreen')}>
+        <TouchableOpacity style={styles.buttonroutes}>
           <Feather color={'#fff'} size={20} name="edit" />
           <Text style={styles.editbutton}>Edit profile</Text>
         </TouchableOpacity>
@@ -61,7 +57,9 @@ const CusTomDrawer = ({navigation}) => {
           <Ionicons color={'#fff'} size={25} name="bookmarks-outline" />
           <Text style={styles.editbutton}>saved</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity style={styles.buttonroutes} onPress={()=>navigation.navigate("setting")}>
+        <TouchableOpacity
+          style={styles.buttonroutes}
+          onPress={() => navigation.navigate('setting')}>
           <Ionicons color={'#fff'} size={25} name="settings-outline" />
           <Text style={styles.editbutton}>settings</Text>
         </TouchableOpacity>
@@ -74,11 +72,14 @@ const CusTomDrawer = ({navigation}) => {
           <Text style={styles.editbutton}>fAQ</Text>
         </TouchableOpacity>
       </View>
-      
+
       <View style={{marginTop: height * 0.09}}>
-      <View style={styles.logo}>
-        <Image style={{width:"100%",height:"100%",resizeMode:"center"}} source={Images.Logo}/>
-      </View>
+        <View style={styles.logo}>
+          <Image
+            style={{width: '100%', height: '100%', resizeMode: 'center'}}
+            source={Images.Logo}
+          />
+        </View>
         <TouchableOpacity style={styles.logbutton}>
           <AntDesign color={'#fff'} size={20} name="logout" />
           <Text style={styles.editbutton}>Sign out</Text>
@@ -92,7 +93,7 @@ export default CusTomDrawer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2C9BFF",
+    backgroundColor: '#2C9BFF',
     padding: 20,
   },
   procon: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#fff',
-    overflow:"hidden"
+    overflow: 'hidden',
   },
   sProfileText: {
     fontSize: calculateFontSize(25),
@@ -147,9 +148,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
   },
-  logo:{
+  logo: {
     width: width * 0.4,
-    height:height*0.1,
-    marginVertical:10
-  }
+    height: height * 0.1,
+    marginVertical: 10,
+  },
 });
